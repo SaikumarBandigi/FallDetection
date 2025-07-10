@@ -5,6 +5,7 @@ import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -16,8 +17,12 @@ public class AlertService {
     private JavaMailSender mailSender;
 
     // Twilio credentials
-    private static final String ACCOUNT_SID = "ACb65739d4c6d2f56b1a3cde9134803cb6";
-    private static final String AUTH_TOKEN = "665b057fd5f11821a489b9872ad0c83b";
+    @Value("${twilio.account.sid}")
+    private String ACCOUNT_SID;
+
+    @Value("${twilio.auth.token}")
+    private String AUTH_TOKEN;
+
 
     // Twilio WhatsApp sandbox number
     private static final String TWILIO_WHATSAPP_NUMBER = "whatsapp:+14155238886";
