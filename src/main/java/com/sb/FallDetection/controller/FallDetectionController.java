@@ -30,7 +30,7 @@ public class FallDetectionController {
 
             // Replace with actual recipient email
             emailService.sendFallAlert(
-                    new String[]{"bandigisaikumar@gmail.com"},
+                    new String[]{"bandigisaikumar@gmail.com","balrajbandigi1965@gmail.com"},
                     event.getDeviceId(),
                     event.getAcceleration()
             );
