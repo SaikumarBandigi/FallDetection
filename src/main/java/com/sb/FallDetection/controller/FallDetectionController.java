@@ -1,9 +1,7 @@
 package com.sb.FallDetection.controller;
 
-
-
 import com.sb.FallDetection.model.FallEvent;
-import com.sb.FallDetection.service.EmailService;
+import com.sb.FallDetection.service.AlertService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,23 +12,19 @@ import java.time.LocalDateTime;
 public class FallDetectionController {
 
     @Autowired
-    private EmailService emailService;
+    private AlertService alertService;
 
-
-    private static final double FALL_THRESHOLD = 2.5; // example acceleration threshold
+    private static final double FALL_THRESHOLD = 2.5;
 
     @PostMapping("/detect")
     public String detectFall(@RequestBody FallEvent event) {
-        // Save event
         event.setTimestamp(LocalDateTime.now());
 
-
-        // Check threshold and send email alert
-        if(event.getAcceleration() > FALL_THRESHOLD) {
-
-            // Replace with actual recipient email
-            emailService.sendFallAlert(
-                    new String[]{"bandigisaikumar@gmail.com"},
+        if (event.getAcceleration() > FALL_THRESHOLD) {
+            // Send alerts (email + WhatsApp)
+            alertService.sendFallAlert(
+                    new String[]{"bandigisaikumar@gmail.com"},  // Email recipients
+                    "+916305032504",                             // WhatsApp number in E.164 format (with country code, no plus)
                     event.getDeviceId(),
                     event.getAcceleration()
             );
